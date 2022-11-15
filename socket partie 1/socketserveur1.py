@@ -20,11 +20,11 @@ while msg !="arret" and test!="arret":
         else:
             test= input("message:")
             conn.send(test.encode())
-
+    conn.close()
 
 
 server_socket.close()
-conn.close()
+
 
 
 
