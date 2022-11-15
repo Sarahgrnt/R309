@@ -7,10 +7,20 @@ print('serveur démaré')
 server_socket.listen(1)
 conn, address = server_socket.accept()
 msg=""
-while msg !="bye":
+test=""
+
+while msg !="arret" and test!="arret":
     msg = conn.recv(1024).decode()
     print(msg)
     test= input("message:")
     conn.send(test.encode())
 
+
+
+server_socket.close()
 conn.close()
+
+
+
+# conn.close() fermeture de la connexion client :bye (on recommence a partir du conn accept)
+#server_socket.close() fermeture de la connexion serveur : arret
