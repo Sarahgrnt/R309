@@ -1,13 +1,28 @@
 import socket
+import threading
+msgcl=""
+msgserv = ""
 
-client_socket = socket.socket()
-client_socket.connect(("127.0.0.1", 10000))
-print ("connecté au serveur")
-msg=""
-while msg !="bye":
-    msg = str(input("message:"))
-    envoie = client_socket.send(msg.encode())
-    data = client_socket.recv(1024).decode()
-    print(data)
 
-client_socket.close()
+def reception(client_socket):
+    msgserv = ""
+    while msgserv != "bye" and msgserv != "arret":
+        msgserv = client_socket.recv(1024).decode()
+        print(msgserv)
+
+if __name__ =="__main__":
+    client_socket = socket.socket()
+    client_socket.connect(("127.0.0.1", 10000))
+    print ("connecté au serveur")
+
+
+    t = threading.Thread(target= reception,args=[reception])
+    t.start()
+
+    while msgcl !="bye":
+        msgcl = str(input("message:"))
+        envoie = client_socket.send(msgcl.encode())
+
+    t.join()
+
+    client_socket.close()
