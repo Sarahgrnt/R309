@@ -11,27 +11,28 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
         grid = QGridLayout()
         widget.setLayout(grid)
-        lab = QLabel("température")
+        self.__lab = QLabel("température")
         self.__texttemp = QLineEdit("")
-        labc = QLabel("°C")
-        convertir = QPushButton("convertir")
-        Kelvin = QLabel("Kelvin")
+        self.__labc = QLabel("°C")
+        self.__convertir = QPushButton("convertir")
+        self.__Kelvin = QLabel("Kelvin")
         self.__textK = QLineEdit("")
-        labK = QLabel("°K")
+        self.__labK = QLabel("°K")
         self.__box = QComboBox()
         self.__box.addItem("C -> K")
         self.__box.addItem("K -> C")
+        self.__calc = QLineEdit("")
         self.__box.currentIndexChanged.connect(self.selectionchange)
         # Ajouter les composants au grid ayout
-        grid.addWidget(lab, 0, 0)
+        grid.addWidget(self.__lab, 0, 0)
         grid.addWidget(self.__texttemp,0,1)
-        grid.addWidget(labc,0,2)
-        grid.addWidget(convertir,1,1)
-        grid.addWidget(Kelvin,2,0)
+        grid.addWidget(self.__labc,0,2)
+        grid.addWidget(self.__convertir,1,1)
+        grid.addWidget(self.__Kelvin,2,0)
         grid.addWidget(self.__textK,2,1)
-        grid.addWidget(labK,2,2)
+        grid.addWidget(self.__labK,2,2)
         grid.addWidget(self.__box,1,2)
-        convertir.clicked.connect(self._Convertion)
+        self.__convertir.clicked.connect(self._Convertion)
         self.setWindowTitle("Conversion de température")
 
     def selectionchange(self, i):
@@ -42,11 +43,15 @@ class MainWindow(QMainWindow):
         print("Current index", i, "selection changed ", self.__box.currentText())
 
     def _Convertion(self):
-        pass
+        if self.__box.currentText() =="C -> K":
+            temp = float(self.__texttemp.text()) + 273.15
+            self.__textK.setText(f"{temp}")
+        else:
+            temp = float(self.__textK.text()) - 273.15
+            self.__texttemp.setText(f"{temp}")
 
-
-    #def _actionQuitter(self):
-        #QCoreApplication.exit(0)
+    def _actionQuitter(self):
+        QCoreApplication.exit(0)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
