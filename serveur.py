@@ -7,8 +7,8 @@ if __name__ =="__main__":
     ThreadCount = 0
 
     try:
-        #server_socket.bind(("127.0.0.1", 10000))
-    #print('serveur démaré')
+        server_socket.bind(("127.0.0.1", 10000))
+    print('serveur démaré')
     except socket.error:
         print(str(socket.error))
     print('Socket is listening..')

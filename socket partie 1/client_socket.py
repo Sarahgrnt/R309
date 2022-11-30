@@ -4,7 +4,7 @@ data = ""
 
 if __name__ =="__main__":
     client_socket = socket.socket()
-    client_socket.connect(("127.0.0.1", 10000))
+    client_socket.connect(("127.0.0.1", 10005))
     print ("connecté au serveur")
 
     while msg !="bye" and data != "bye" and msg !="arret" and data != "arret":

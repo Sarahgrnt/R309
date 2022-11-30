@@ -10,13 +10,14 @@ def reception(client_socket):
         msgserv = client_socket.recv(1024).decode()
         print(msgserv)
 
+
 if __name__ =="__main__":
     client_socket = socket.socket()
-    client_socket.connect(("127.0.0.1", 10000))
+    client_socket.connect(("127.0.0.1", 10003))
     print ("connecté au serveur")
 
 
-    t = threading.Thread(target= reception,args=[reception])
+    t = threading.Thread(target= reception,args=[client_socket])
     t.start()
 
     while msgcl !="bye":

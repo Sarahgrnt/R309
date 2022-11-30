@@ -1,37 +1,25 @@
 import socket,sys
-PORT=10001
+PORT=10055
 msg=""
 test=""
 if __name__ =="__main__":
 
 
-    while True :
+    while msg!="kill":
+        msg = ""
         server_socket = socket.socket()
         server_socket.bind(("127.0.0.1", PORT))
-        server_socket.listen(1)
+        server_socket.listen(5)
         print('serveur démaré')
 
-        msg = ""
-        test=""
-        if msg == "kill" and test == "kill":
-            conn.send("kill".encode())
-            sys.exit()
-        while msg != "kill" and test != "kill" and msg != "reset" and test != "reset" :
-            conn, address = server_socket.accept()
+        while msg != "kill" and msg != "reset":
             msg = ""
-            test = ""
+            conn, address = server_socket.accept()
+            print("connexion")
 
-
-            while msg != "disconnect" and test != "disconnect" and msg != "kill" and test != "kill" and msg!= "reset" and test != "reset":
+            while msg != "disconnect" and msg != "kill"  and msg!= "reset" :
                 msg = conn.recv(1024).decode()
-                print(msg)
-                if msg == "disconnect":
-                    conn.send("disconnect".encode())
-                else:
-                    test = input("message:")
-                    conn.send(test.encode())
-
-
+                test = conn.send(msg.encode())
             conn.close()
 
         server_socket.close()
