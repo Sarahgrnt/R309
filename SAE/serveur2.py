@@ -1,8 +1,15 @@
 import socket,sys,os
-PORT=10055
+import os
+import psutil
+
+import resp as resp
+from ping3 import ping
+PORT=10056
 msg=""
 test=""
 cmd=""
+
+
 if __name__ =="__main__":
 
 
@@ -14,22 +21,33 @@ if __name__ =="__main__":
         server_socket.listen(5)
         print('serveur démaré')
 
-        while msg != "kill" and msg != "reset":
+        while msg != "kill" and msg != "reset" :
             msg = ""
-            cmd=""
             conn, address = server_socket.accept()
             print("connexion")
-            if cmd == "ip" or "IP":
-                conn.send((socket.gethostbyname(socket.gethostname())).encode())
-            if cmd == "name" or "Name":
-                conn.send((socket.gethostname()).encode())
+            #conn.send(socket.gethostbyname(socket.gethostname()).encode())
+            #conn.send(socket.gethostname().encode())
 
-            while msg != "disconnect" and msg != "kill"  and msg!= "reset" :
+            while msg != "disconnect" and msg != "kill"  and msg!= "reset":
                 msg = conn.recv(1024).decode()
-                test = conn.send(msg.encode())
-
-
-
+                if msg == "ip":
+                    msg = socket.gethostbyname(socket.gethostname())
+                    conn.send(msg.encode())
+                elif msg == "name":
+                    msg= socket.gethostname()
+                    conn.send(msg.encode())
+                elif msg== "cpu":
+                    msg=str(psutil.cpu_percent())
+                    conn.send(msg.encode())
+                elif msg == "RAM":
+                    psutil.virtual_memory()  # you can convert that object to a dictionary dict
+                    (psutil.virtual_memory()._asdict())
+                    msg=str(psutil.virtual_memory().percent)
+                    conn.send(msg.encode())
+                elif msg == "OS":
+                    conn.send(sys.platform.encode())
+                else:
+                    conn.send(msg.encode())
             conn.close()
 
         server_socket.close()

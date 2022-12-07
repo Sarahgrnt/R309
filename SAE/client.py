@@ -1,11 +1,11 @@
 import socket
 import threading
-PORT=10055
+PORT=10056
 msg=""
 data = ""
 
 
-class server():
+class client():
     def __init__(self, hostname=int, port=int):
         self.__port = port
         self.__hostname = hostname
