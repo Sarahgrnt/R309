@@ -2,6 +2,7 @@ import sys
 
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QMainWindow, QComboBox
+from client import client
 
 class interface(QMainWindow):
     def __init__(self):
@@ -11,7 +12,7 @@ class interface(QMainWindow):
         grid = QGridLayout()
         widget.setLayout(grid)
         self.__fichier = QLabel("Lecture de fichier")
-        self.__ajout = QPushButton("ajouter des machines")
+        #self.__ajout = QPushButton("ajouter des machines")
         self.__nom = QLabel("nom:")
         self.__textnom= QLineEdit("")
         self.__ip = QLabel("ip:")
@@ -23,17 +24,21 @@ class interface(QMainWindow):
         self.__cpu = QLabel("nom:")
         self.__textcpu = QLineEdit("")
         self.__choose = QComboBox()
-        self.__choose.addItem("test")
+        self.__choose.addItem("OS")
+        self.__choose.addItem("CPU")
+        self.__choose.addItem("RAM")
+        self.__choose.addItem("IP")
+        self.__choose.addItem("Name")
         self.__valider = QPushButton("valider")
         self.__choose.currentIndexChanged.connect(self.selectionchange)
 
 
         grid.addWidget(self.__fichier,0,0)
-        grid.addWidget(self.__ajout,1,0)
+        grid.addWidget(self.__textcpu,1,0)
         grid.addWidget(self.__choose,2,0)
         grid.addWidget(self.__valider,2,1)
 
-        #self.__valider.clicked.connect()
+        #self.__valider.clicked.connect(self)
         self.setWindowTitle("Interface SAE")
 
 

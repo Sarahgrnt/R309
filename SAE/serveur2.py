@@ -1,10 +1,9 @@
-import socket,sys,os
+import socket,sys
 import os
 import psutil
-
 import resp as resp
 from ping3 import ping
-PORT=10056
+PORT=10054
 msg=""
 test=""
 cmd=""
@@ -25,27 +24,30 @@ if __name__ =="__main__":
             msg = ""
             conn, address = server_socket.accept()
             print("connexion")
-            #conn.send(socket.gethostbyname(socket.gethostname()).encode())
-            #conn.send(socket.gethostname().encode())
 
-            while msg != "disconnect" and msg != "kill"  and msg!= "reset":
+            while msg != "disconnect" and msg != "kill" and msg != "reset":
                 msg = conn.recv(1024).decode()
                 if msg == "ip":
                     msg = socket.gethostbyname(socket.gethostname())
                     conn.send(msg.encode())
                 elif msg == "name":
-                    msg= socket.gethostname()
+                    msg = socket.gethostname()
                     conn.send(msg.encode())
-                elif msg== "cpu":
-                    msg=str(psutil.cpu_percent())
+                elif msg == "cpu":
+                    msg = str(psutil.cpu_percent())
                     conn.send(msg.encode())
                 elif msg == "RAM":
                     psutil.virtual_memory()  # you can convert that object to a dictionary dict
-                    (psutil.virtual_memory()._asdict())
-                    msg=str(psutil.virtual_memory().percent)
+                    psutil.virtual_memory()._asdict()
+                    msg = str(psutil.virtual_memory().percent)
                     conn.send(msg.encode())
                 elif msg == "OS":
-                    conn.send(sys.platform.encode())
+                    msg = str(sys.platform)
+                    conn.send(msg.encode())
+
+                elif msg == "python":
+                    msg = str(sys.version)
+                    conn.send(msg.encode())
                 else:
                     conn.send(msg.encode())
             conn.close()

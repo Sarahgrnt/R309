@@ -1,6 +1,6 @@
 import socket
 import threading
-PORT=10056
+PORT=10054
 msg=""
 data = ""
 
@@ -45,19 +45,20 @@ class client():
     def close(self):
         self.__socket.close()
 
-
 if __name__ =="__main__":
 
-            while msg!="disconnect" and msg!="kill":
-                msg=""
-                client_socket = socket.socket()
-                client_socket.connect(("127.0.0.1", PORT))
-                print ("connecté au serveur")
+    while msg != "disconnect" and msg != "kill":
+        msg = ""
+        client_socket = socket.socket()
+        client_socket.connect(("127.0.0.1", PORT))
+        print("connecté au serveur")
 
-                while msg !="disconnect" and msg !="kill" and msg !="reset":
-                    msg = str(input("message:"))
-                    envoie = client_socket.send(msg.encode())
-                    data = client_socket.recv(1024).decode()
-                    print(data)
+        while msg != "disconnect" and msg != "kill" and msg != "reset":
+            msg = str(input("message:"))
+            envoie = client_socket.send(msg.encode())
+            data = client_socket.recv(1024).decode()
+            print(data)
 
-                client_socket.close()
+        client_socket.close()
+
+
