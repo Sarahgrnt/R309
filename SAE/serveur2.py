@@ -27,13 +27,13 @@ if __name__ =="__main__":
 
             while msg != "disconnect" and msg != "kill" and msg != "reset":
                 msg = conn.recv(1024).decode()
-                if msg == "ip":
+                if msg == "IP":
                     msg = socket.gethostbyname(socket.gethostname())
                     conn.send(msg.encode())
-                elif msg == "name":
+                elif msg == "Name":
                     msg = socket.gethostname()
                     conn.send(msg.encode())
-                elif msg == "cpu":
+                elif msg == "CPU":
                     msg = str(psutil.cpu_percent())
                     conn.send(msg.encode())
                 elif msg == "RAM":

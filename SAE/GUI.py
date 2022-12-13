@@ -12,17 +12,21 @@ class interface(QMainWindow):
         grid = QGridLayout()
         widget.setLayout(grid)
         self.__fichier = QLabel("Lecture de fichier")
-        #self.__ajout = QPushButton("ajouter des machines")
-        self.__nom = QLabel("nom:")
-        self.__textnom= QLineEdit("")
-        self.__ip = QLabel("ip:")
-        self.__textip = QLineEdit("")
-        self.__os = QLabel("os:")
-        self.__textos = QLineEdit("")
-        self.__ram = QLabel("ram:")
-        self.__textram = QLineEdit("")
-        self.__cpu = QLabel("nom:")
-        self.__textcpu = QLineEdit("")
+        self.__nomfichier = QLineEdit("")
+        self.__lire = QPushButton("Lire")
+
+        grid.addWidget(self.__fichier, 0, 0)
+        grid.addWidget(self.__nomfichier, 0, 1)
+        grid.addWidget(self.__lire, 0, 2)
+
+        self.__lire.clicked.connect(self.__lireFichier)
+
+        self.__textcmd = QLineEdit("")
+        self.__cmd= QLabel("ligne de commande:")
+        self.__validecmd=QPushButton("valider")
+        self.__disconnect=QPushButton("disconnect")
+        self.__kill=QPushButton("kill")
+        self.__reset=QPushButton("reset")
         self.__choose = QComboBox()
         self.__choose.addItem("OS")
         self.__choose.addItem("CPU")
@@ -33,14 +37,35 @@ class interface(QMainWindow):
         self.__choose.currentIndexChanged.connect(self.selectionchange)
 
 
-        grid.addWidget(self.__fichier,0,0)
-        grid.addWidget(self.__textcpu,1,0)
-        grid.addWidget(self.__choose,2,0)
-        grid.addWidget(self.__valider,2,1)
 
-        #self.__valider.clicked.connect(self)
+        grid.addWidget(self.__cmd,1,0)
+        grid.addWidget(self.__textcmd,1,1)
+        grid.addWidget(self.__validecmd,1,2)
+        grid.addWidget(self.__choose,2,1)
+        grid.addWidget(self.__valider,2,2)
+        grid.addWidget(self.__disconnect,3,0)
+        grid.addWidget(self.__kill,3,1)
+        grid.addWidget(self.__reset,3,2)
+
+
         self.setWindowTitle("Interface SAE")
 
+    def __lireFichier(self):
+        print(f"Lecture du fichier {self.__nomfichier.text()}")
+        # Pour debugger le code ==> code de test
+        self.__clientList = []
+        IP = []
+        IP.append("localhost")
+        for ip in IP:
+            print(f"Connection à {ip}")
+            monclient = client(ip, 10058)
+            monclient.connected()
+            self.__clientList.append(monclient)
+
+    def __traitement(self,msg):
+
+        for client in self.__clientList:
+            client.send(self.cmdtext())
 
     def selectionchange(self, i):
         print ("Items in the list are :")

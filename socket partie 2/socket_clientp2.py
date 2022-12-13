@@ -12,6 +12,8 @@ def reception(client_socket):
 
 
 if __name__ =="__main__":
+
+
     client_socket = socket.socket()
     client_socket.connect(("127.0.0.1", 10003))
     print ("connecté au serveur")
