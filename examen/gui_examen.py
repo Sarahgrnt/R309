@@ -1,5 +1,5 @@
 import sys
-
+#lien github https://github.com/Sarahgrnt/R309/tree/sarah.grenot%40uha.fr/examen
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QMainWindow, QComboBox
 from clientexam import connected
