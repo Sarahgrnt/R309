@@ -19,10 +19,13 @@ class client():
         self.tConnected.start()
 
     def connected(self):
-        self.__socket = socket.socket()
-        print("En attente de connexion")
-        self.__socket.connect((self.__hostname,self.__port))
-        print("Connexion établie")
+        try:
+            self.__socket = socket.socket()
+            print("En attente de connexion")
+            self.__socket.connect((self.__hostname,self.__port))
+            print("Connexion établie")
+        except BrokenPipeError:
+            print("serveur non connecté")
 
     def send(self, msg):
         self.verrou = threading.Lock()
@@ -41,6 +44,9 @@ class client():
             print(msg)
         else:
             print("pas de connexion")
+
+
+
 
     def close(self):
         self.__socket.close()
@@ -61,7 +67,8 @@ if __name__ =="__main__":
                 print(data)
 
             client_socket.close()
-    except:
-        ConnectionError
+    except ConnectionError:
+        print("pas de serveur")
+
 
 

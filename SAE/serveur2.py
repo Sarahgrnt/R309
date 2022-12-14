@@ -44,6 +44,7 @@ if __name__ =="__main__":
                 elif msg == "OS":
                     msg = str(sys.platform)
                     conn.send(msg.encode())
+                    print(msg)
 
                 elif msg == "python":
                     msg = str(sys.version)
