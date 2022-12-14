@@ -3,6 +3,8 @@ import threading
 PORT=10054
 msg=""
 data = ""
+temp=[]
+
 
 
 class client():
@@ -19,13 +21,10 @@ class client():
         self.tConnected.start()
 
     def connected(self):
-        try:
             self.__socket = socket.socket()
             print("En attente de connexion")
             self.__socket.connect((self.__hostname,self.__port))
             print("Connexion établie")
-        except BrokenPipeError:
-            print("serveur non connecté")
 
     def send(self, msg):
         self.verrou = threading.Lock()
@@ -38,13 +37,16 @@ class client():
         self.tSend.join()
 
     def sended(self,msg):
-        if self.isConnected():
-            self.__socket.send(msg.encode())
-            msg= self.__socket.recv(1024).decode()
-            print(msg)
-        else:
-            print("pas de connexion")
+            if self.isConnected():
+                self.__socket.send(msg.encode())
+                msg= self.__socket.recv(1024).decode()
+                temp.append(msg)
+                print(msg)
+            else:
+                print("pas de connexion")
 
+    def receive(self,msg):
+        print(temp)
 
 
 

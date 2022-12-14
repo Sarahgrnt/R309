@@ -1,9 +1,6 @@
 import socket,sys
-import os
 import psutil
-import resp as resp
-from ping3 import ping
-PORT=10054
+PORT=10065
 msg=""
 test=""
 cmd=""
@@ -28,7 +25,7 @@ if __name__ =="__main__":
             while msg != "disconnect" and msg != "kill" and msg != "reset":
                 msg = conn.recv(1024).decode()
                 if msg == "IP":
-                    msg = socket.gethostbyname(socket.gethostname())
+                    msg =socket.gethostbyname(socket.gethostname())
                     conn.send(msg.encode())
                 elif msg == "Name":
                     msg = socket.gethostname()
@@ -43,6 +40,7 @@ if __name__ =="__main__":
                     conn.send(msg.encode())
                 elif msg == "OS":
                     msg = str(sys.platform)
+
                     conn.send(msg.encode())
                     print(msg)
 

@@ -1,38 +1,58 @@
-import socket
-from _thread import *
+import socket,sys
+import psutil
+PORT=10054
 msg=""
 test=""
+cmd=""
+
+
 if __name__ =="__main__":
-    server_socket = socket.socket()
-    ThreadCount = 0
-
-    try:
-        server_socket.bind(("127.0.0.1", 10000))
-    print('serveur démaré')
-    except socket.error:
-        print(str(socket.error))
-    print('Socket is listening..')
-    server_socket.listen(5)
 
 
-    def multi_threaded_client(connection):
-        connection.send(str.encode('Server is working:'))
-        while True:
-            data = connection.recv(2048)
-            response = 'Server message: ' + data.decode('utf-8')
-            if not data:
-                 break
-            connection.sendall(str.encode(response))
-        connection.close()
+    while msg!="kill":
+        msg = ""
+        cmd=""
+        server_socket = socket.socket()
+        server_socket.bind(("10.171.251.144", PORT))
+        server_socket.listen(5)
+        print('serveur démaré')
 
+        while msg != "kill" and msg != "reset" :
+            msg = ""
+            conn, address = server_socket.accept()
+            print("connexion")
 
-    while True:
-        Client, address = server_socket.accept()
-        print('Connected to: ' + address[0] + ':' + str(address[1]))
-        start_new_thread(multi_threaded_client, (Client,))
-        ThreadCount += 1
-        print('Thread Number: ' + str(ThreadCount))
-    server_socket.close()
+            while msg != "disconnect" and msg != "kill" and msg != "reset":
+                msg = conn.recv(1024).decode()
+                if msg == "IP":
+                    msg =socket.gethostbyname(socket.gethostname())
+                    conn.send(msg.encode())
+                    print("message envoyé!!!!")
+                elif msg == "Name":
+                    msg = socket.gethostname()
+                    conn.send(msg.encode())
+                elif msg == "CPU":
+                    msg = str(psutil.cpu_percent())
+                    conn.send(msg.encode())
+                elif msg == "RAM":
+                    psutil.virtual_memory()  # you can convert that object to a dictionary dict
+                    psutil.virtual_memory()._asdict()
+                    msg = str(psutil.virtual_memory().percent)
+                    conn.send(msg.encode())
+                elif msg == "OS":
+                    msg = str(sys.platform)
+
+                    conn.send(msg.encode())
+                    print(msg)
+
+                elif msg == "python":
+                    msg = str(sys.version)
+                    conn.send(msg.encode())
+                else:
+                    conn.send(msg.encode())
+            conn.close()
+
+        server_socket.close()
 
 
 

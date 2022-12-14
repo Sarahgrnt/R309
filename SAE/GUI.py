@@ -68,17 +68,21 @@ class interface(QMainWindow):
         self.__clientList = []
         IP = []
         IP.append("localhost")
+        #IP.append(self.__nomfichier.text())
         for ip in IP:
             print(f"Connection à {ip}")
-            monclient = client(ip, 10054)
+            monclient = client(ip, 10065)
             monclient.connected()
             self.__clientList.append(monclient)
 
     def __traitement(self):
         for client in self.__clientList:
             if self.__choose.currentText()=="OS":
+                self.__oslist=[]
                 client.sended("OS")
-                print("messge envoyé")
+                msg=client.receive
+                print(msg)
+            print("messge envoyé")
             if self.__choose.currentText()=="CPU":
                 client.sended("CPU")
                 print("message envoyé")
@@ -92,13 +96,14 @@ class interface(QMainWindow):
                 client.sended("Name")
                 print("message envoyé")
 
+
+
     def __tkt(self):
         for client in self.__clientList:
             if self.__commande.currentText()=="kill":
                 client.sended("kill")
                 print("close")
                 client.close()
-
             if self.__commande.currentText()=="disconnect":
                 client.sended("disconnect")
                 client.close()
