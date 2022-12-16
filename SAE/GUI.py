@@ -1,6 +1,4 @@
 import sys
-
-from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import *
 from client import client
 
@@ -37,7 +35,7 @@ class interface(QMainWindow):
         self.__choose.addItem("IP")
         self.__choose.addItem("Name")
         self.__commande = QComboBox()
-        self.__commande.addItem( "kill")
+        self.__commande.addItem( "valider")
         self.__commande.addItem("reset")
         self.__commande.addItem("disconnect")
         self.__valider = QPushButton("valider1")
@@ -56,10 +54,10 @@ class interface(QMainWindow):
         grid.addWidget(self.__choose,2,1)
         grid.addWidget(self.__valider,2,2)
         grid.addWidget(self.__affichage,2,3)
-        grid.addWidget(self.__disconnect,3,0)
+        #grid.addWidget(self.__disconnect,3,0)
         grid.addWidget(self.__kill,3,1)
-        grid.addWidget(self.__reset,3,2)
-        grid.addWidget(self.__commande,4,1)
+        #grid.addWidget(self.__reset,3,2)
+        grid.addWidget(self.__commande,3,2)
 
 
         self.setWindowTitle("Interface SAE")
