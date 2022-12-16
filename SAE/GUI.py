@@ -69,12 +69,13 @@ class interface(QMainWindow):
         # Pour debugger le code ==> code de test
         self.__clientList = []
         IP = []
-        IP.append("localhost")
+        IP.append("127.0.0.1")
         #IP.append(self.__nomfichier.text())
         for ip in IP:
             print(f"Connection à {ip}")
-            monclient = client(ip, 10065)
+            monclient = client(ip, 10066)
             monclient.connected()
+            print("connecté")
             self.__clientList.append(monclient)
 
     def traitement(self,client):

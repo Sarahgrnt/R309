@@ -38,12 +38,11 @@ class client():
 
     def sended(self,msg):
             if self.isConnected():
-                while msg != "disconnect" and msg != "kill" and msg != "reset":
+                #while msg != "disconnect" and msg != "kill" and msg != "reset":
                     self.__socket.send(msg.encode())
                     msg = self.__socket.recv(1024).decode()
                     #print(f"{msg} message client")
                     return msg
-                self.__socket.close()
             else:
                  print("pas de connexion")
 
@@ -54,25 +53,27 @@ class client():
         msg = self.__socket.recv(1024).decode()
         print(f"{msg} message client1")
 
-    def data(self,msg):
-        try:
-            while msg != "disconnect" and msg != "kill":
-                msg = ""
-                client_socket = socket.socket()
-                client_socket.connect(("127.0.0.1", PORT))
-                print("connecté au serveur")
-
-                while msg != "disconnect" and msg != "kill" and msg != "reset":
-                    client_socket.send(msg.encode())
-                    data = client_socket.recv(1024).decode()
-                    print(data)
-
-                client_socket.close()
-        except ConnectionError:
-            print("pas de serveur")
+    #def data(self,msg):
 
 
-#if __name__ =="__main__":
+if __name__ =="__main__":
+
+    try:
+        while msg != "disconnect" and msg != "kill":
+            msg = ""
+            client_socket = socket.socket()
+            client_socket.connect(("127.0.0.1", PORT))
+            print("connecté au serveur")
+
+            while msg != "disconnect" and msg != "kill" and msg != "reset":
+                client_socket.send(msg.encode())
+                data = client_socket.recv(1024).decode()
+                print(data)
+
+            client_socket.close()
+    except ConnectionError:
+        print("pas de serveur")
+
 
 
 
