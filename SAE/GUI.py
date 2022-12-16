@@ -60,13 +60,13 @@ class interface(QMainWindow):
         self.setWindowTitle("Interface SAE")
 
     def __lireFichier(self):
-        print(f"Lecture du fichier {self.__nomfichier.text()}")   # Pour debugger le code ==> code de test
+        self.__affichage.setText(f"Lecture du fichier {self.__nomfichier.text()}")   # Pour debugger le code ==> code de test
         self.__clientList = []
         IP = []
         IP.append("127.0.0.1")
         #IP.append(self.__nomfichier.text())
         for ip in IP:
-            print(f"Connection à {ip}")
+            self.__affichage.setText(f"Connection à {ip}")
             monclient = client(ip, 10065)
             monclient.connected()
             self.__clientList.append(monclient)
@@ -74,22 +74,25 @@ class interface(QMainWindow):
 
     def traitement(self,client):
         self.__temp=[]
-        for client in self.__clientList:
-            if self.__choose.currentText()=="OS":
-                msg=client.sended("OS")
-                self.__affichage.append(f"os: {msg}")
-            if self.__choose.currentText()=="CPU":
-                msg = client.sended("CPU")
-                self.__affichage.append(f"cpu :{msg}% d'utilisation")
-            if self.__choose.currentText()=="RAM":
-                msg = client.sended("RAM")
-                self.__affichage.append(f"ram: {msg}%")
-            if self.__choose.currentText()=="IP":
-                msg = client.sended("IP")
-                self.__affichage.append(f"adresse ip: {msg}")
-            if self.__choose.currentText()=="Name":
-                msg=client.sended("Name")
-                self.__affichage.append(f"nom du serveur:{msg}")
+        try:
+            for client in self.__clientList:
+                if self.__choose.currentText()=="OS":
+                    msg=client.sended("OS")
+                    self.__affichage.append(f"os: {msg}")
+                if self.__choose.currentText()=="CPU":
+                    msg = client.sended("CPU")
+                    self.__affichage.append(f"cpu :{msg}% d'utilisation")
+                if self.__choose.currentText()=="RAM":
+                    msg = client.sended("RAM")
+                    self.__affichage.append(f"ram: {msg}%")
+                if self.__choose.currentText()=="IP":
+                    msg = client.sended("IP")
+                    self.__affichage.append(f"adresse ip: {msg}")
+                if self.__choose.currentText()=="Name":
+                    msg=client.sended("Name")
+                    self.__affichage.append(f"nom du serveur:{msg}")
+        except:
+            self.__affichage.append("pas de serveur connecté")
 
 
 
