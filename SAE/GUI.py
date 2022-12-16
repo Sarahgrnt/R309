@@ -42,11 +42,8 @@ class interface(QMainWindow):
         self.__affichage= QTextBrowser()
         self.__choose.currentIndexChanged.connect(self.selectionchange)
 
-
         self.__valider.clicked.connect(self.traitement)
         self.__kill.clicked.connect(self.__tkt)
-
-
 
         grid.addWidget(self.__cmd,1,0)
         grid.addWidget(self.__textcmd,1,1)
@@ -63,8 +60,7 @@ class interface(QMainWindow):
         self.setWindowTitle("Interface SAE")
 
     def __lireFichier(self):
-        print(f"Lecture du fichier {self.__nomfichier.text()}")
-        # Pour debugger le code ==> code de test
+        print(f"Lecture du fichier {self.__nomfichier.text()}")   # Pour debugger le code ==> code de test
         self.__clientList = []
         IP = []
         IP.append("127.0.0.1")
