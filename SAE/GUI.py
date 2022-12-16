@@ -73,10 +73,10 @@ class interface(QMainWindow):
         #IP.append(self.__nomfichier.text())
         for ip in IP:
             print(f"Connection à {ip}")
-            monclient = client(ip, 10066)
+            monclient = client(ip, 10065)
             monclient.connected()
-            print("connecté")
             self.__clientList.append(monclient)
+            self.__affichage.setText("connecté au serveur")
 
     def traitement(self,client):
         self.__temp=[]
@@ -109,7 +109,7 @@ class interface(QMainWindow):
                 self.__affichage.setText("deconnexion")
             if self.__commande.currentText()=="reset":
                 client.sended("reset")
-
+                self.__affichage.setText("reset de la connexion")
 
 
     def selectionchange(self, i):

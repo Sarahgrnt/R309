@@ -1,6 +1,6 @@
 import socket,sys
 import psutil
-PORT=10066
+PORT=10065
 msg=""
 test=""
 cmd=""

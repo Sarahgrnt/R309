@@ -1,6 +1,6 @@
 import socket
 import threading
-PORT=10054
+PORT=10065
 msg=""
 data = ""
 
