@@ -1,8 +1,10 @@
 import sys
 
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QMainWindow, QComboBox
+from PyQt5.QtWidgets import *
 from client import client
+
+
 
 class interface(QMainWindow):
     def __init__(self):
@@ -39,11 +41,11 @@ class interface(QMainWindow):
         self.__commande.addItem("reset")
         self.__commande.addItem("disconnect")
         self.__valider = QPushButton("valider1")
-        self.__affichage= QLineEdit("")
+        self.__affichage= QTextBrowser()
         self.__choose.currentIndexChanged.connect(self.selectionchange)
 
 
-        self.__valider.clicked.connect(self.__traitement)
+        self.__valider.clicked.connect(self.traitement)
         self.__kill.clicked.connect(self.__tkt)
 
 
@@ -75,26 +77,24 @@ class interface(QMainWindow):
             monclient.connected()
             self.__clientList.append(monclient)
 
-    def __traitement(self):
+    def traitement(self,client):
+        self.__temp=[]
         for client in self.__clientList:
             if self.__choose.currentText()=="OS":
-                self.__oslist=[]
-                client.sended("OS")
-                msg=client.receive
-                print(msg)
-            print("messge envoyé")
+                msg=client.sended("OS")
+                self.__affichage.append(f"os: {msg}")
             if self.__choose.currentText()=="CPU":
-                client.sended("CPU")
-                print("message envoyé")
+                msg = client.sended("CPU")
+                self.__affichage.append(f"cpu :{msg}% d'utilisation")
             if self.__choose.currentText()=="RAM":
-                client.sended("RAM")
-                print("message envoyé")
+                msg = client.sended("RAM")
+                self.__affichage.append(f"ram: {msg}%")
             if self.__choose.currentText()=="IP":
-                client.sended("IP")
-                print("message envoyé")
+                msg = client.sended("IP")
+                self.__affichage.append(f"adresse ip: {msg}")
             if self.__choose.currentText()=="Name":
-                client.sended("Name")
-                print("message envoyé")
+                msg=client.sended("Name")
+                self.__affichage.append(f"nom du serveur:{msg}")
 
 
 
@@ -102,14 +102,13 @@ class interface(QMainWindow):
         for client in self.__clientList:
             if self.__commande.currentText()=="kill":
                 client.sended("kill")
-                print("close")
-                client.close()
+                self.__affichage.setText("serveur mort")
             if self.__commande.currentText()=="disconnect":
                 client.sended("disconnect")
-                client.close()
+                self.__affichage.setText("deconnexion")
             if self.__commande.currentText()=="reset":
                 client.sended("reset")
-                client.close()
+
 
 
     def selectionchange(self, i):

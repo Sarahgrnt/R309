@@ -2,7 +2,7 @@ import sys
 #lien github https://github.com/Sarahgrnt/R309/tree/sarah.grenot%40uha.fr/examen
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QMainWindow, QComboBox
-from clientexam import connected
+from clientexam import
 
 class interface(QMainWindow):
     def __init__(self):
@@ -55,7 +55,7 @@ class interface(QMainWindow):
         IP.append("localhost")
         for ip in IP:
             print(f"Connection à {ip}")
-            monclient = connected(ip, 10058)
+            monclient = client(ip, 10058)
             monclient.connected()
             print("connecté au serveur")
 

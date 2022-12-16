@@ -40,7 +40,6 @@ if __name__ =="__main__":
                     conn.send(msg.encode())
                 elif msg == "OS":
                     msg = str(sys.platform)
-
                     conn.send(msg.encode())
                     print(msg)
 
